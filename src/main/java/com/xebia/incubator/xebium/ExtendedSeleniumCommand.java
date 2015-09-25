@@ -245,6 +245,10 @@ public class ExtendedSeleniumCommand {
 		return methodName.startsWith("captureEntirePageScreenshot");
 	}
 
+	public boolean isAnalyzeScreenshotCommand() {
+		return methodName.startsWith("analyzeScreenshot");
+	}
+	
 	public boolean isBooleanCommand() {
 		return isCommand(getSeleniumCommand(), Verb.IS);
 	}
@@ -281,7 +285,7 @@ public class ExtendedSeleniumCommand {
 			} else if (isSupportedByWebDriver(Verb.GET.applyTo(noun))) {
 				seleniumName = Verb.GET.applyTo(noun);
 			}
-		} else if (isCaptureEntirePageScreenshotCommand()) {
+		} else if (isCaptureEntirePageScreenshotCommand() || isAnalyzeScreenshotCommand()) {
 			seleniumName = "captureScreenshotToString";
 		}
 		

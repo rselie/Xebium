@@ -1,0 +1,23 @@
+!2 !help
+!3 This example demonstrates how to create a screenshot of the active browser page in your test and 
+send it to visualreview. Currently it is configured with host is nohost and will ignore the analyzeScreenshot command.
+If you want to use visualreview and execute this test case, download visual review (https://github.com/xebia/VisualReview) 
+start it with the start.sh. and change the value of nohost to local host.
+
+'''Use the ''create visual analyze for project'' command and specify a project, suite, host and a portnumber'''
+'''Use the ''analyzeScreenshot'' command and specify the name of the page'''
+
+'''Executed steps:
+1. Open the current page.
+2. Verify the page title "${PAGE_NAME}".
+3. Create a Screenshot of the browser window and send it to the visualreview.'''
+
+!| script | selenium driver fixture |
+| start browser | ${BROWSER} | on url | http://localhost:${FITNESSE_PORT}  |
+| create visual analyze for project| xebium | suite | ExampleSuite | host | nohost | port | 7000 |
+| ensure | do | open | on | ${PAGE_PATH}.${PAGE_NAME} |
+| ensure | do | verifyTextPresent | on | ${PAGE_NAME} |
+| ensure | do | analyzeScreenshot | on | ${PAGE_NAME}_sceen.png |
+| stop browser |
+
+'''Analyze the screenshot resulting from this test at http://localhost:7000 when host is changed to localhost.'''

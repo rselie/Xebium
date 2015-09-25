@@ -23,6 +23,7 @@ import com.thoughtworks.selenium.HttpCommandProcessor;
 import com.thoughtworks.selenium.SeleniumException;
 import com.xebia.incubator.xebium.fastseleniumemulation.FastWebDriverCommandProcessor;
 import com.thoughtworks.selenium.webdriven.WebDriverCommandProcessor;
+
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +61,8 @@ public class SeleniumDriverFixture {
 	private boolean stopBrowserOnAssertion = true;
 
 	private ScreenCapture screenCapture = new ScreenCapture();
+	
+	private VisualAnalyzer visualAnalyzer = new VisualAnalyzer();
 
 	private LocatorCheck locatorCheck;
 
@@ -214,6 +217,10 @@ public class SeleniumDriverFixture {
 	void setScreenCapture(ScreenCapture screenCapture) {
 		this.screenCapture = screenCapture;
 	}
+	
+	void setVisualAnalyzer(VisualAnalyzer visualAnalyzer) {
+		this.visualAnalyzer = visualAnalyzer;
+	}
 
 	/**
 	 * <p><code>
@@ -318,6 +325,26 @@ public class SeleniumDriverFixture {
 		saveScreenshotAfter(policy);
 	}
 
+	/**
+	 * <p><code>
+	 * | create visual analyze for project| <i>project</i> | suite | <i>suiteName</i> | host | <i>hostName</i> | port | <i>portNumber</i> |
+	 * </code></p>
+	 */
+	public void createVisualAnalyzeForProjectSuiteHostPort(String project, String suiteName, String hostName, String portNumber) {
+		try {
+			visualAnalyzer.setBrowser(defaultWebDriverSupplier.getBrowser());
+			if (visualAnalyzer.isInitialized(project, suiteName)) {
+				return;
+			}
+			visualAnalyzer.setProject(project);
+			visualAnalyzer.setSuite(suiteName);
+			visualAnalyzer.setHost(hostName);
+			visualAnalyzer.setPort(portNumber);
+			visualAnalyzer.createRun();
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		}
+	}
 	/**
 	 * <p><code>
 	 * | ensure | do | <i>open</i> | on | <i>/</i> |
@@ -459,6 +486,10 @@ public class SeleniumDriverFixture {
 			if (command.isCaptureEntirePageScreenshotCommand()) {
 				writeToFile(values[0], commandResult.output);
 			}
+			
+			if (command.isAnalyzeScreenshotCommand()) {
+				startAnalyse(values[0], commandResult.output);
+			}
 		}
 
 		if (screenCapture.requireScreenshot(command, commandResult.result)) {
@@ -477,6 +508,14 @@ public class SeleniumDriverFixture {
 		} else {
 			return commandResult.result;
 		}
+	}
+
+	private void startAnalyse(final String screenshotName, String output) {
+		try {
+			visualAnalyzer.takeAndSendScreenshot(screenshotName, output);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}	
 	}
 
 	private SeleniumCommandResult executeDoCommandPolling(String[] values, ExtendedSeleniumCommand command) {
@@ -680,6 +719,5 @@ public class SeleniumDriverFixture {
 	private SeleniumCommandResult failure(Exception e) {
 		return new SeleniumCommandResult(false, null, e);
 	}
-
 
 }

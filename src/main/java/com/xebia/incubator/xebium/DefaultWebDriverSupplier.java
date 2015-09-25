@@ -125,6 +125,10 @@ public class DefaultWebDriverSupplier implements ConfigurableWebDriverSupplier {
 	public void setBrowser(String browser) {
 		this.browser = browser;
 	}
+	
+	public String getBrowser() {
+		return browser;
+	}
 
 	public void setCustomProfilePreferencesFile(
 			File customProfilePreferencesFile) {
@@ -134,7 +138,7 @@ public class DefaultWebDriverSupplier implements ConfigurableWebDriverSupplier {
 	public void setProfileDirectory(File profileDirectory) {
 		this.profileDirectory = profileDirectory;
 	}
-
+ 
 	@Override
 	public String toString() {
 		return getClass().getName();

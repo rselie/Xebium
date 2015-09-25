@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.thoughtworks.selenium.CommandProcessor;
+
 import org.openqa.selenium.WebDriverException;
 
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class SeleniumDriverFixtureTest {
 
 	@Mock
 	private ScreenCapture screenCapture;
+	
+	@Mock VisualAnalyzer visualAnalyzer;
 
 	private SeleniumDriverFixture seleniumDriverFixture;
 
@@ -35,6 +38,7 @@ public class SeleniumDriverFixtureTest {
 		this.seleniumDriverFixture = new SeleniumDriverFixture();
 		seleniumDriverFixture.setCommandProcessor(commandProcessor);
 		seleniumDriverFixture.setScreenCapture(screenCapture);
+		seleniumDriverFixture.setVisualAnalyzer(visualAnalyzer);
 	}
 
     @Test
@@ -135,5 +139,18 @@ public class SeleniumDriverFixtureTest {
 		}
 
 		verify(screenCapture).captureScreenshot("clickAndWait", new String[] { "id=verwijderen" });
+	}
+	
+	@Test
+	public void shouldTakeEndSendScreenshot() throws IOException {
+		seleniumDriverFixture.createVisualAnalyzeForProjectSuiteHostPort("project1", "suiteName", "localhost", "7000");
+		String output = "Di 9 november 2010. Het laatste nieuws het eerst op nu.nl";
+		given(commandProcessor.doCommand(anyString(), isA(String[].class))).willReturn(output);
+		try {
+			seleniumDriverFixture.doOn("analyzeScreenshot", "NameOfScreenshot");
+		} catch (Throwable t) {
+			// Not sure whether we want to propagate this exception... that's the current behaviour though.
+		}
+		verify(visualAnalyzer).takeAndSendScreenshot("NameOfScreenshot", output);
 	}
 }
