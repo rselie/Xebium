@@ -17,7 +17,7 @@ start it with the start.sh. and change the value of nohost to local host.
 | create visual analyze for project| xebium | suite | ExampleSuite | host | nohost | port | 7000 |
 | ensure | do | open | on | ${PAGE_PATH}.${PAGE_NAME} |
 | ensure | do | verifyTextPresent | on | ${PAGE_NAME} |
-| ensure | do | analyzeScreenshot | on | ${PAGE_NAME}_sceen.png |
+| ensure | do | analyzeScreenshot | on | ${PAGE_NAME} |
 | stop browser |
 
 '''Analyze the screenshot resulting from this test at http://localhost:7000 when host is changed to localhost.'''
