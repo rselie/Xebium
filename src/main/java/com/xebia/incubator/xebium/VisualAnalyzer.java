@@ -52,12 +52,13 @@ public class VisualAnalyzer {
 	    HttpPost httpPost = new HttpPost("http://" + hostname + ":" + port + "/api/runs");
 	    StringEntity input = new StringEntity("{\"projectName\":\"" + project + "\",\"suiteName\":\"" + suite + "\"}");
 	    input.setContentType("application/json");
-
+	    LOG.info("httpPost when creating run: " + "http://" + hostname + ":" + port + "/api/runs");
+	 
 	    httpPost.setEntity(input);
 	    CloseableHttpResponse response = httpclient.execute(httpPost);
 
 	    try {
-	      System.out.println("response from server when creating run: " + response.getStatusLine());
+	      LOG.info("response from server when creating run: " + response.getStatusLine());
 	      HttpEntity responseEntity = response.getEntity();
 
 	      JsonFactory factory = new JsonFactory();
