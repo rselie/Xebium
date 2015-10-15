@@ -13,6 +13,7 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.openqa.selenium.Dimension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -143,5 +144,9 @@ public class VisualAnalyzer {
 	public void setBrowser(String browser) {
 		this.browserName = browser;
 		
+	}
+
+	public void setSize(Dimension size) {
+		resolution = size.getHeight() + " x " + size.getWidth();
 	}
 }

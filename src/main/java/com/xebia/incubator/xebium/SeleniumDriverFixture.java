@@ -24,6 +24,7 @@ import com.thoughtworks.selenium.SeleniumException;
 import com.xebia.incubator.xebium.fastseleniumemulation.FastWebDriverCommandProcessor;
 import com.thoughtworks.selenium.webdriven.WebDriverCommandProcessor;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -333,9 +334,13 @@ public class SeleniumDriverFixture {
 	public void createVisualAnalyzeForProjectSuiteHostPort(String project, String suiteName, String hostName, String portNumber) {
 		try {
 			visualAnalyzer.setBrowser(defaultWebDriverSupplier.getBrowser());
+			
 			if (visualAnalyzer.isInitialized(project, suiteName)) {
 				return;
 			}
+			Dimension size = getWebDriver().manage().window().getSize();
+			size.getHeight();
+			visualAnalyzer.setSize(size);
 			visualAnalyzer.setProject(project);
 			visualAnalyzer.setSuite(suiteName);
 			visualAnalyzer.setHost(hostName);

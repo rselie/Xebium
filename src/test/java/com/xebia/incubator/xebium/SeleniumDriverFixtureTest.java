@@ -10,12 +10,14 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.thoughtworks.selenium.CommandProcessor;
+import com.thoughtworks.selenium.webdriven.WebDriverCommandProcessor;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.WebDriverException;
 
 import java.io.IOException;
@@ -24,7 +26,19 @@ import java.io.IOException;
 public class SeleniumDriverFixtureTest {
 
 	@Mock
-	private CommandProcessor commandProcessor;
+	private WebDriver webdriver;
+	
+	@Mock
+	private Options options;
+	
+	@Mock
+	private WebDriver.Window window;
+	
+	@Mock
+	private Dimension demension;
+
+	@Mock
+	private WebDriverCommandProcessor commandProcessor;
 
 	@Mock
 	private ScreenCapture screenCapture;
@@ -143,10 +157,16 @@ public class SeleniumDriverFixtureTest {
 	
 	@Test
 	public void shouldTakeEndSendScreenshot() throws IOException {
-		seleniumDriverFixture.createVisualAnalyzeForProjectSuiteHostPort("project1", "suiteName", "localhost", "7000");
+		given(commandProcessor.getWrappedDriver()).willReturn(webdriver);
+		given(webdriver.manage()).willReturn(options);
+		given(options.window()).willReturn(window);
+		given(window.getSize()).willReturn(demension);
+		given(demension.getHeight()).willReturn(120);
+		given(demension.getWidth()).willReturn(320);
 		String output = "Di 9 november 2010. Het laatste nieuws het eerst op nu.nl";
 		given(commandProcessor.doCommand(anyString(), isA(String[].class))).willReturn(output);
 		try {
+			seleniumDriverFixture.createVisualAnalyzeForProjectSuiteHostPort("project1", "suiteName", "localhost", "7000");
 			seleniumDriverFixture.doOn("analyzeScreenshot", "NameOfScreenshot");
 		} catch (Throwable t) {
 			// Not sure whether we want to propagate this exception... that's the current behaviour though.
