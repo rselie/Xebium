@@ -147,6 +147,8 @@ public class VisualAnalyzer {
 	}
 
 	public void setSize(Dimension size) {
-		resolution = size.getHeight() + " x " + size.getWidth();
+		if (size != null) {
+			resolution = size.getHeight() + " x " + size.getWidth();
+		}
 	}
 }

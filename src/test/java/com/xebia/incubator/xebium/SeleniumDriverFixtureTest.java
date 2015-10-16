@@ -183,12 +183,6 @@ public class SeleniumDriverFixtureTest {
 	@Test
 	public void shouldTakeEndSendScreenshotWithUnkownResolution() throws IOException {
 		seleniumDriverFixture.setCommandProcessor(commandProcessor);
-//		given(commandProcessor.getWrappedDriver()).willReturn(webdriver);
-//		given(webdriver.manage()).willReturn(options);
-//		given(options.window()).willReturn(window);
-//		given(window.getSize()).willReturn(demension);
-//		given(demension.getHeight()).willReturn(120);
-//		given(demension.getWidth()).willReturn(320);
 		String output = "Di 9 november 2010. Het laatste nieuws het eerst op nu.nl";
 		given(commandProcessor.doCommand(anyString(), isA(String[].class))).willReturn(output);
 		try {
