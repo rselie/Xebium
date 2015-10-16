@@ -338,8 +338,10 @@ public class SeleniumDriverFixture {
 			if (visualAnalyzer.isInitialized(project, suiteName)) {
 				return;
 			}
-			Dimension size = getWebDriver().manage().window().getSize();
-			size.getHeight();
+			Dimension size = null;
+			if (getWebDriver() != null) {
+				size = getWebDriver().manage().window().getSize();
+			}
 			visualAnalyzer.setSize(size);
 			visualAnalyzer.setProject(project);
 			visualAnalyzer.setSuite(suiteName);

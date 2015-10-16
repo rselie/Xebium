@@ -34,7 +34,7 @@ public class VisualAnalyzer {
 	private static int runId;
 	private String browserName = "chrome";
 	private static String platformName = "Windows7";
-	private static String resolution = "1366 x 768";
+	private static String resolution = "unkown x unknown";
 	private static String browserVersion = "45.0 (64-bit)";
 	
 
