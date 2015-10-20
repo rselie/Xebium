@@ -29,7 +29,7 @@
   </licenses>
 
   <properties>
-    <selenium.version>2.44.0</selenium.version>
+    <selenium.version>2.48.2</selenium.version>
     <fitnesse.version>20130530</fitnesse.version>
     <fitnesse.port>8000</fitnesse.port>
     <fitnesse.expiration>0</fitnesse.expiration>
@@ -140,7 +140,6 @@
       <version>1.1</version>
       <scope>test</scope>
     </dependency>
-
 	<dependency>
 	  <groupId>com.fasterxml.jackson.core</groupId>
 	  <artifactId>jackson-core</artifactId>
