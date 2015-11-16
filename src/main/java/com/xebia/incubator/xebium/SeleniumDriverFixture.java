@@ -58,6 +58,8 @@ public class SeleniumDriverFixture {
 	private long timeout = 30000;
 
 	private long stepDelay = 0;
+	
+	private long screenprintDelay = 0;
 
 	private long pollDelay = 100;
 
@@ -285,6 +287,17 @@ public class SeleniumDriverFixture {
 	}
 
 	/**
+	 * <p>Set delay before screenprint.</p>
+	 * <p><code>
+	 * | set screenprint delay to | 1500 |
+	 * </code></p>
+	 *
+	 * @param stepDelay delay in milliseconds
+	 */
+	public void setScreenprintDelayTo(String screenprintDelay) {
+		this.screenprintDelay = Long.parseLong(screenprintDelay);
+	}
+	/**
 	 * <p>In case of an assertion (assert* selenese command), close the browser.</p>
 	 * <p><code>
 	 * | set stop browser on assertion | true |
@@ -489,9 +502,9 @@ public class SeleniumDriverFixture {
 			commandResult = failure();
 		} else if (command.requiresPolling()) {
 			commandResult = executeDoCommandPolling(values, command);
-		} else {
+		} else if (command.isScreenshotCommand()) {
+			delayIfNeeded(screenprintDelay);
 			commandResult = executeAndCheckResult(command, values, stepDelay);
-
 			if (command.isCaptureEntirePageScreenshotCommand()) {
 				writeToFile(values[0], commandResult.output);
 			}
@@ -499,6 +512,8 @@ public class SeleniumDriverFixture {
 			if (command.isAnalyzeScreenshotCommand()) {
 				startAnalyse(values[0], commandResult.output);
 			}
+		} else {
+			commandResult = executeAndCheckResult(command, values, stepDelay);
 		}
 
 		if (screenCapture.requireScreenshot(command, commandResult.result)) {

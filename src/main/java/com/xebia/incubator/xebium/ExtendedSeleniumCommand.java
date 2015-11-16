@@ -18,8 +18,6 @@
 
 package com.xebia.incubator.xebium;
 
-import com.google.common.base.CaseFormat;
-
 import static org.apache.commons.lang.StringUtils.removeStartIgnoreCase;
 import static org.apache.commons.lang.StringUtils.trim;
 
@@ -27,6 +25,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import com.google.common.base.CaseFormat;
 
 /**
  * This class provides calls to all operations defined in the Selenium IDE.
@@ -247,6 +247,10 @@ public class ExtendedSeleniumCommand {
 
 	public boolean isAnalyzeScreenshotCommand() {
 		return methodName.startsWith("analyzeScreenshot");
+	}
+	
+	public boolean isScreenshotCommand() {
+		return isAnalyzeScreenshotCommand() || isCaptureEntirePageScreenshotCommand();
 	}
 	
 	public boolean isBooleanCommand() {
