@@ -18,16 +18,10 @@
 
 package com.xebia.incubator.xebium;
 
-import com.thoughtworks.selenium.CommandProcessor;
-import com.thoughtworks.selenium.HttpCommandProcessor;
-import com.thoughtworks.selenium.SeleniumException;
-import com.xebia.incubator.xebium.fastseleniumemulation.FastWebDriverCommandProcessor;
-import com.thoughtworks.selenium.webdriven.WebDriverCommandProcessor;
-
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static com.xebia.incubator.xebium.FitNesseUtil.asFile;
+import static com.xebia.incubator.xebium.FitNesseUtil.removeAnchorTag;
+import static com.xebia.incubator.xebium.FitNesseUtil.stringArrayToString;
+import static org.apache.commons.lang.StringUtils.join;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,8 +30,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static com.xebia.incubator.xebium.FitNesseUtil.*;
-import static org.apache.commons.lang.StringUtils.join;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.thoughtworks.selenium.CommandProcessor;
+import com.thoughtworks.selenium.HttpCommandProcessor;
+import com.thoughtworks.selenium.SeleniumException;
+import com.thoughtworks.selenium.webdriven.WebDriverCommandProcessor;
+import com.xebia.incubator.xebium.fastseleniumemulation.FastWebDriverCommandProcessor;
 
 /**
  * Main fixture. Starts a browser session and execute commands.
